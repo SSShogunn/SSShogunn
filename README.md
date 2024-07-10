@@ -1,6 +1,8 @@
 <h1 align="center">Hi 👋, I'm Aman Singh</h1>
 <h3 align="center">You've stumbled upon my work cave.</h3>
 
+<p align="left"> <img src="https://komarev.com/ghpvc/?username=ssshogunn&label=Profile%20views&color=0e75b6&style=flat" alt="ssshogunn" /> </p>
+
 <p align="left"> <a href="https://github.com/ryo-ma/github-profile-trophy"><img src="https://github-profile-trophy.vercel.app/?username=ssshogunn" alt="ssshogunn" /></a> </p>
 
 - 🔭 I’m currently working on **Lumina**
