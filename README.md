@@ -1,5 +1,7 @@
 # 💫 About Me:
-Hi, I'm Aman Singh, a 21-year-old software developer passionate about building impactful applications. I have experience working with React, Next.js, Node.js, and MERN stack to create dynamic, user-centric web applications. My projects like VibeVault, Lumina PDF, and SpiceSafari showcase my ability to integrate modern technologies like OpenAI, Pinecone, and Firebase.<br><br>I’m constantly learning and expanding my skill set. Currently, I’m working on machine learning for disease detection and building file upload interfaces with React. I enjoy exploring new tools and frameworks and have hands-on experience with platforms like Google Cloud Platform (GCP), Microsoft Azure, and Docker.
+Hi, I'm Aman Singh, a 21-year-old software developer passionate about building impactful applications. I have experience working with React, Next.js, Node.js, and the MERN stack to create dynamic, user-centric web applications. My projects like VibeVault, Lumina PDF, and SpiceSafari showcase my ability to integrate modern technologies like OpenAI, Pinecone, and Firebase.
+
+I’m constantly learning and expanding my skill set. Currently, I’m working on machine learning for disease detection and building file upload interfaces with React. I enjoy exploring new tools and frameworks and have hands-on experience with platforms like Google Cloud Platform (GCP), Microsoft Azure, and Docker.
 
 
 ## 🌐 Socials:
