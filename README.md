@@ -5,17 +5,12 @@
 <br><br>
 
 <h3><code>aman@github ~ $ ./contributions.sh</code></h3>
-<img src="./contrib-heatmap.svg" width="860" />
+<img src="./contrib-heatmap.svg" width="792" />
 
 <br><br>
 
-<h3><code>aman@github ~ $ whoami</code></h3>
-<table>
-<tr>
-<td valign="top"><img src="./ascii-portrait.svg" width="370" /></td>
-<td valign="top"><img src="./info-card.svg" width="490" /></td>
-</tr>
-</table>
+<h3><code>aman@github ~ $ neofetch</code></h3>
+<img src="./info-card.svg" width="490" />
 
 <br>
 
