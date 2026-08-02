@@ -15,7 +15,7 @@ from collections import defaultdict
 import requests
 
 sys.path.insert(0, os.path.dirname(__file__))
-from _svg_common import WIDTH, TITLEBAR_H, frame_open, svg_open
+from _svg_common import TOPLANGS_WIDTH as WIDTH, TITLEBAR_H, frame_open, svg_open
 
 USERNAME = os.environ.get("GITHUB_PROFILE_USERNAME", "SSShogunn")
 TOKEN = os.environ.get("GH_API_TOKEN")
@@ -85,7 +85,7 @@ def render(totals, top_n=6):
     pad_x = 24
     bar_top = TITLEBAR_H + 26
     row_h = 22
-    n_legend_rows = -(-len(top) // 3)  # ceil div, 3 per row at this width
+    n_legend_rows = -(-len(top) // 2)  # ceil div, 2 per row at this narrower width
     height = bar_top + bar_h + 20 + n_legend_rows * row_h + 14
 
     parts = [svg_open(WIDTH, height)]
@@ -105,11 +105,11 @@ def render(totals, top_n=6):
         x += w
 
     legend_y = bar_top + bar_h + 24
-    col_w = bar_w / 3
+    col_w = bar_w / 2
     for i, (lang, n) in enumerate(top):
         pct = 100 * n / total_bytes
-        col = i % 3
-        row = i // 3
+        col = i % 2
+        row = i // 2
         lx = pad_x + col * col_w
         ly = legend_y + row * row_h
         color = LANG_COLORS.get(lang, FALLBACK_COLOR)

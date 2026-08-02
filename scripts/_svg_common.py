@@ -11,7 +11,13 @@ TITLE_COLOR = "#7d8590"
 TITLEBAR_H = 30
 RADIUS = 10
 
-WIDTH = 792  # common width for every block in the README
+WIDTH = 792  # common width for the full-width blocks in the README
+
+# the neofetch card + top-languages bar sit side by side in one row:
+# card takes 35%, langs bar takes the rest, with a gap between them.
+ROW_GAP = 20
+INFO_CARD_WIDTH = round(WIDTH * 0.35)
+TOPLANGS_WIDTH = WIDTH - INFO_CARD_WIDTH - ROW_GAP
 
 
 def esc(s):

@@ -8,11 +8,13 @@
 
 <br><br>
 
-<img src="./info-card.svg" width="792" />
-
-<br><br>
-
-<img src="./toplangs.svg" width="792" />
+<table>
+<tr>
+<td valign="top"><img src="./info-card.svg" width="277" /></td>
+<td width="20"></td>
+<td valign="top"><img src="./toplangs.svg" width="495" /></td>
+</tr>
+</table>
 
 </div>
 
