@@ -5,35 +5,26 @@
 <br><br>
 
 <h3><code>aman@github ~ $ ./contributions.sh</code></h3>
-<img src="./contrib-heatmap.svg" width="792" />
+<img src="./contrib-heatmap.svg" width="860" />
 
 <br><br>
 
+<h3><code>aman@github ~ $ whoami</code></h3>
 <table>
 <tr>
-<td valign="top">
+<td valign="top"><img src="./ascii-portrait.svg" width="370" /></td>
+<td valign="top"><img src="./info-card.svg" width="490" /></td>
+</tr>
+</table>
 
-<h3><code>aman@github ~ $ neofetch</code></h3>
-<img src="./info-card.svg" width="490" />
-
-</td>
-<td valign="top">
+<br>
 
 <h3><code>aman@github ~ $ toplangs</code></h3>
 <img src="./toplangs.svg" width="560" />
 
-</td>
-</tr>
-</table>
-
 </div>
 
 <br>
-
-## 🛠️ A few things I've built
-- **[PeerDrop](https://github.com/SSShogunn/PeerDrop)** — peer-to-peer file transfer over WebRTC, no server in the middle.
-- **Continuum** — a self-hosted MCP memory server for persisting project/homelab context across AI sessions.
-- **Saber (fork)** — added infinite-canvas note taking on top of the open-source Saber app.
 
 ## 🌐 Socials
 [![Instagram](https://img.shields.io/badge/Instagram-%23E4405F.svg?logo=Instagram&logoColor=white)](https://www.instagram.com/ss__aman) [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/aman-singh91) [![Portfolio](https://img.shields.io/badge/Portfolio-000000.svg?logo=About.me&logoColor=white)](https://amansingh.social)
