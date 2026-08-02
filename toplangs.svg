@@ -1,0 +1,26 @@
+<svg viewBox="0 0 560 146" xmlns="http://www.w3.org/2000/svg" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace">
+<rect x="0" y="0" width="560" height="146" rx="10" ry="10" fill="#0d1117" stroke="#30363d" stroke-width="1"/>
+<text x="18" y="18" fill="#7d8590" font-size="11">top languages</text>
+<rect x="18.0" y="24" width="0" height="14" fill="#3178c6"><animate attributeName="width" from="0" to="248.8" begin="0s" dur="0.6s" fill="freeze"/></rect>
+<rect x="266.8" y="24" width="0" height="14" fill="#f1e05a"><animate attributeName="width" from="0" to="120.2" begin="0s" dur="0.6s" fill="freeze"/></rect>
+<rect x="386.9" y="24" width="0" height="14" fill="#3572A5"><animate attributeName="width" from="0" to="108.3" begin="0s" dur="0.6s" fill="freeze"/></rect>
+<rect x="495.2" y="24" width="0" height="14" fill="#00ADD8"><animate attributeName="width" from="0" to="20.9" begin="0s" dur="0.6s" fill="freeze"/></rect>
+<rect x="516.1" y="24" width="0" height="14" fill="#563d7c"><animate attributeName="width" from="0" to="15.0" begin="0s" dur="0.6s" fill="freeze"/></rect>
+<rect x="531.1" y="24" width="0" height="14" fill="#8b949e"><animate attributeName="width" from="0" to="4.4" begin="0s" dur="0.6s" fill="freeze"/></rect>
+<rect x="535.5" y="24" width="0" height="14" fill="#8b949e"><animate attributeName="width" from="0" to="6.5" begin="0s" dur="0.6s" fill="freeze"/></rect>
+<rect x="18" y="24" width="524" height="14" rx="4" ry="4" fill="none" stroke="#0d1117" stroke-width="0"/>
+<circle cx="23.0" cy="56" r="5" fill="#3178c6"/>
+<text x="34.0" y="60" fill="#c9d1d9" font-size="11">TypeScript 47.5%</text>
+<circle cx="285.0" cy="56" r="5" fill="#f1e05a"/>
+<text x="296.0" y="60" fill="#c9d1d9" font-size="11">JavaScript 22.9%</text>
+<circle cx="23.0" cy="76" r="5" fill="#3572A5"/>
+<text x="34.0" y="80" fill="#c9d1d9" font-size="11">Python 20.7%</text>
+<circle cx="285.0" cy="76" r="5" fill="#00ADD8"/>
+<text x="296.0" y="80" fill="#c9d1d9" font-size="11">Go 4.0%</text>
+<circle cx="23.0" cy="96" r="5" fill="#563d7c"/>
+<text x="34.0" y="100" fill="#c9d1d9" font-size="11">CSS 2.9%</text>
+<circle cx="285.0" cy="96" r="5" fill="#8b949e"/>
+<text x="296.0" y="100" fill="#c9d1d9" font-size="11">SCSS 0.8%</text>
+<circle cx="23.0" cy="116" r="5" fill="#8b949e"/>
+<text x="34.0" y="120" fill="#c9d1d9" font-size="11">Other 1.2%</text>
+</svg>
