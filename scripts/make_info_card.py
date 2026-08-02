@@ -1,20 +1,23 @@
 #!/usr/bin/env python3
 """
-Hand-author a neofetch-style info card SVG: a title bar, then colored
-key/value rows (Now, Prev, Stack, Highlights) that fade + slide in on a
-short stagger, like the panel is printing next to the portrait.
+Hand-author a neofetch-style info card SVG: shared terminal chrome, then
+colored key/value rows that fade + slide in on a short stagger, with a
+fixed-width label column (sized to the longest label) and thin divider
+lines between rows for cleaner alignment.
 
 STATIC=1 env var emits a frozen (fully revealed) frame for local previews.
 Output: info-card.svg (repo root).
 """
 import os
+import sys
+
+sys.path.insert(0, os.path.dirname(__file__))
+from _svg_common import WIDTH, TITLEBAR_H, BORDER, frame_open, svg_open, esc
 
 STATIC = os.environ.get("STATIC") == "1"
 OUT_PATH = os.path.join(os.path.dirname(__file__), "..", "info-card.svg")
 
-# ---- content -----------------------------------------------------------
-USER = "aman@sshogunn"
-TITLE = f"{USER} ~ $ neofetch"
+TITLE = "aman@sshogunn ~ $ neofetch"
 
 ROWS = [
     ("Role", "Backend Engineer -- AI-powered systems & infra"),
@@ -26,51 +29,22 @@ ROWS = [
 
 LABEL_COLOR = "#39d353"
 VALUE_COLOR = "#c9d1d9"
-BG = "#0d1117"
-BAR_BG = "#161b22"
-BORDER = "#30363d"
-TITLE_COLOR = "#7d8590"
+DIVIDER_COLOR = "#21262d"
 
-# ---- layout --------------------------------------------------------------
-WIDTH = 490
-TITLEBAR_H = 30
-ROW_H = 26
-PAD_X = 18
-TOP_PAD = 16
-LABEL_W = 96
-HEIGHT = TITLEBAR_H + TOP_PAD + len(ROWS) * ROW_H + 16
-
-
-def esc(s):
-    return (
-        s.replace("&", "&amp;")
-        .replace("<", "&lt;")
-        .replace(">", "&gt;")
-    )
+ROW_H = 34
+PAD_X = 24
+TOP_PAD = 20
+CHAR_W = 7.2  # approx bold-monospace advance at font-size 12.5
+LABEL_W = max(len(label) for label, _ in ROWS) * CHAR_W + 28  # fits longest label + gap
+HEIGHT = TITLEBAR_H + TOP_PAD + len(ROWS) * ROW_H + 12
 
 
 def build_svg():
-    parts = []
-    parts.append(
-        f'<svg viewBox="0 0 {WIDTH} {HEIGHT}" xmlns="http://www.w3.org/2000/svg" '
-        f'font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace">'
-    )
-    parts.append(
-        f'<rect x="0" y="0" width="{WIDTH}" height="{HEIGHT}" rx="10" ry="10" '
-        f'fill="{BG}" stroke="{BORDER}" stroke-width="1"/>'
-    )
-    # title bar with fake traffic-light dots
-    parts.append(f'<rect x="0" y="0" width="{WIDTH}" height="{TITLEBAR_H}" rx="10" ry="10" fill="{BAR_BG}"/>')
-    parts.append(f'<rect x="0" y="{TITLEBAR_H - 10}" width="{WIDTH}" height="10" fill="{BAR_BG}"/>')
-    for i, dot_color in enumerate(["#ff5f56", "#ffbd2e", "#27c93f"]):
-        parts.append(f'<circle cx="{20 + i * 16}" cy="{TITLEBAR_H / 2}" r="5" fill="{dot_color}"/>')
-    parts.append(
-        f'<text x="{WIDTH / 2}" y="{TITLEBAR_H / 2 + 4}" text-anchor="middle" '
-        f'fill="{TITLE_COLOR}" font-size="11">{esc(TITLE)}</text>'
-    )
+    parts = [svg_open(WIDTH, HEIGHT)]
+    parts.extend(frame_open(WIDTH, HEIGHT, TITLE))
 
-    step = 0.35  # seconds between each row's stagger
-    y = TITLEBAR_H + TOP_PAD + 12
+    step = 0.35
+    y = TITLEBAR_H + TOP_PAD + 14
     for i, (label, value) in enumerate(ROWS):
         delay = i * step
         if STATIC:
@@ -86,14 +60,20 @@ def build_svg():
             )
         parts.append(row_open)
         parts.append(
-            f'<text x="{PAD_X}" y="{y}" fill="{LABEL_COLOR}" font-size="12" '
+            f'<text x="{PAD_X}" y="{y}" fill="{LABEL_COLOR}" font-size="12.5" '
             f'font-weight="bold">{esc(label)}</text>'
         )
         parts.append(
-            f'<text x="{PAD_X + LABEL_W}" y="{y}" fill="{VALUE_COLOR}" font-size="12">'
+            f'<text x="{PAD_X + LABEL_W:.1f}" y="{y}" fill="{VALUE_COLOR}" font-size="12.5">'
             f'{esc(value)}</text>'
         )
         parts.append("</g>")
+        if i < len(ROWS) - 1:
+            line_y = y + (ROW_H - 12) / 2 + 12
+            parts.append(
+                f'<line x1="{PAD_X}" y1="{line_y:.1f}" x2="{WIDTH - PAD_X}" y2="{line_y:.1f}" '
+                f'stroke="{DIVIDER_COLOR}" stroke-width="1"/>'
+            )
         y += ROW_H
 
     parts.append("</svg>")

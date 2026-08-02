@@ -7,7 +7,11 @@ Output: contrib-heatmap.svg (repo root).
 """
 import json
 import os
+import sys
 from datetime import datetime
+
+sys.path.insert(0, os.path.dirname(__file__))
+from _svg_common import WIDTH, frame_open, svg_open
 
 PALETTE = ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353", "#69f0a0"]
 #           none    -> ................................. -> brightest (neon top end)
@@ -17,6 +21,7 @@ GAP = 3
 LEFT_PAD = 30
 TOP_PAD = 20
 MONTH_LABEL_H = 16
+TITLE = "aman@github ~ $ ./contributions.sh"
 
 DATA_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "contributions.json")
 OUT_PATH = os.path.join(os.path.dirname(__file__), "..", "contrib-heatmap.svg")
@@ -79,45 +84,42 @@ def month_labels(weeks):
 def render(payload):
     days = payload["days"]
     stats = payload["stats"]
-    username = payload.get("username", "")
     weeks = build_weeks(days)
     n_weeks = len(weeks)
 
     grid_w = n_weeks * (CELL + GAP)
     grid_h = 7 * (CELL + GAP)
-    width = LEFT_PAD + grid_w + 20
-    height = TOP_PAD + MONTH_LABEL_H + grid_h + 46
+    content_w = LEFT_PAD + grid_w + 20
+    x_offset = max(0, (WIDTH - content_w) / 2)  # center the grid if narrower than WIDTH
+    chrome_top = 30  # TITLEBAR_H from _svg_common
+    height = chrome_top + TOP_PAD + MONTH_LABEL_H + grid_h + 46
 
-    svg_parts = []
-    svg_parts.append(
-        f'<svg viewBox="0 0 {width} {height}" xmlns="http://www.w3.org/2000/svg" '
-        f'font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace">'
-    )
-    svg_parts.append(f'<rect width="{width}" height="{height}" fill="#0d1117"/>')
+    svg_parts = [svg_open(WIDTH, height)]
+    svg_parts.extend(frame_open(WIDTH, height, TITLE))
+
+    left = LEFT_PAD + x_offset
 
     # month labels
     for wi, name in month_labels(weeks):
-        x = LEFT_PAD + wi * (CELL + GAP)
+        x = left + wi * (CELL + GAP)
         svg_parts.append(
-            f'<text x="{x}" y="{TOP_PAD + 10}" fill="#7d8590" font-size="10">{name}</text>'
+            f'<text x="{x:.1f}" y="{chrome_top + TOP_PAD + 10}" fill="#7d8590" font-size="10">{name}</text>'
         )
 
     # day cells, staggered diagonal reveal: delay = (week_index + day_index) * step
     step = 0.012
-    max_delay = 0
-    grid_top = TOP_PAD + MONTH_LABEL_H
+    grid_top = chrome_top + TOP_PAD + MONTH_LABEL_H
     for wi, week in enumerate(weeks):
         for di, day in enumerate(week):
             if day["date"] is None:
                 continue
             level = day["level"] or 0
             color = PALETTE[min(level, len(PALETTE) - 1)]
-            x = LEFT_PAD + wi * (CELL + GAP)
+            x = left + wi * (CELL + GAP)
             y = grid_top + di * (CELL + GAP)
             delay = (wi + di) * step
-            max_delay = max(max_delay, delay)
             svg_parts.append(
-                f'<rect x="{x}" y="{y}" width="{CELL}" height="{CELL}" rx="2" ry="2" '
+                f'<rect x="{x:.1f}" y="{y}" width="{CELL}" height="{CELL}" rx="2" ry="2" '
                 f'fill="{color}" opacity="0" class="cell">'
                 f'<animate attributeName="opacity" from="0" to="1" begin="{delay:.3f}s" '
                 f'dur="0.25s" fill="freeze"/>'
@@ -130,16 +132,16 @@ def render(payload):
     # legend
     legend_y = grid_top + grid_h + 18
     svg_parts.append(
-        f'<text x="{LEFT_PAD}" y="{legend_y}" fill="#7d8590" font-size="10">Less</text>'
+        f'<text x="{left:.1f}" y="{legend_y}" fill="#7d8590" font-size="10">Less</text>'
     )
-    lx = LEFT_PAD + 32
+    lx = left + 32
     for i, color in enumerate(PALETTE):
         svg_parts.append(
-            f'<rect x="{lx + i * (CELL + GAP)}" y="{legend_y - 9}" width="{CELL}" '
+            f'<rect x="{lx + i * (CELL + GAP):.1f}" y="{legend_y - 9}" width="{CELL}" '
             f'height="{CELL}" rx="2" ry="2" fill="{color}"/>'
         )
     svg_parts.append(
-        f'<text x="{lx + len(PALETTE) * (CELL + GAP) + 4}" y="{legend_y}" '
+        f'<text x="{lx + len(PALETTE) * (CELL + GAP) + 4:.1f}" y="{legend_y}" '
         f'fill="#7d8590" font-size="10">More</text>'
     )
 
@@ -151,7 +153,7 @@ def render(payload):
         f"longest streak {stats['longest_streak']}"
     )
     svg_parts.append(
-        f'<text x="{LEFT_PAD}" y="{footer_y}" fill="#c9d1d9" font-size="11">{footer}</text>'
+        f'<text x="{left:.1f}" y="{footer_y}" fill="#c9d1d9" font-size="11">{footer}</text>'
     )
 
     svg_parts.append("</svg>")

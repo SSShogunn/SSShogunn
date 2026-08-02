@@ -1,19 +1,24 @@
 #!/usr/bin/env python3
 """
-Self-hosted terminal "boot sequence" banner -- replaces the third-party
-readme-typing-svg.herokuapp.com dependency with something we own and that
-matches the rest of the terminal aesthetic. Each line wipes in left-to-right,
-staggered top to bottom, then a cursor block blinks forever at the end.
+Self-hosted terminal "boot sequence" banner -- shared chrome, same width
+as every other block. Each line wipes in left-to-right, staggered top to
+bottom, then a cursor block blinks forever at the end.
 
 STATIC=1 emits a frozen (fully revealed, no blink) frame for local previews.
 Output: boot-banner.svg (repo root).
 """
 import os
+import sys
+
+sys.path.insert(0, os.path.dirname(__file__))
+from _svg_common import WIDTH, TITLEBAR_H, frame_open, svg_open, esc
 
 STATIC = os.environ.get("STATIC") == "1"
 OUT_PATH = os.path.join(os.path.dirname(__file__), "..", "boot-banner.svg")
 
-# (text, color) -- keep this free of employer/location details on purpose.
+TITLE = "aman@github ~ $ ./boot.sh"
+
+# (text, color) -- kept free of employer/location details on purpose.
 LINES = [
     ("$ whoami", "#7d8590"),
     ("aman singh -- backend engineer", "#c9d1d9"),
@@ -23,25 +28,16 @@ LINES = [
     ("online.", "#39d353"),
 ]
 
-WIDTH = 560
 LINE_H = 26
-PAD_X = 18
-PAD_TOP = 24
+PAD_X = 24
+PAD_TOP = TITLEBAR_H + 24
 CHAR_W = 8.4  # approx monospace advance at font-size 13
-HEIGHT = PAD_TOP + len(LINES) * LINE_H + 20
-
-
-def esc(s):
-    return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+HEIGHT = PAD_TOP + len(LINES) * LINE_H + 18
 
 
 def build_svg():
-    parts = [
-        f'<svg viewBox="0 0 {WIDTH} {HEIGHT}" xmlns="http://www.w3.org/2000/svg" '
-        f'font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace">',
-        f'<rect x="0" y="0" width="{WIDTH}" height="{HEIGHT}" rx="10" ry="10" '
-        f'fill="#0d1117" stroke="#30363d" stroke-width="1"/>',
-    ]
+    parts = [svg_open(WIDTH, HEIGHT)]
+    parts.extend(frame_open(WIDTH, HEIGHT, TITLE))
 
     step = 0.55
     y = PAD_TOP
@@ -68,7 +64,6 @@ def build_svg():
         last_line_end = delay + 0.5
         y += LINE_H
 
-    # blinking cursor after the last line finishes typing
     cursor_x = PAD_X + len(LINES[-1][0]) * CHAR_W + 4
     cursor_y = PAD_TOP + (len(LINES) - 1) * LINE_H
     if STATIC:
