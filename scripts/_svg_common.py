@@ -19,20 +19,29 @@ ROW_GAP = 20
 INFO_CARD_WIDTH = round(WIDTH * 0.35)
 TOPLANGS_WIDTH = WIDTH - INFO_CARD_WIDTH - ROW_GAP
 
+# info-card and toplangs sit in the same row -- share one fixed height so
+# they line up flush regardless of how much content each one has.
+ROW_CARD_HEIGHT = 188
+
 
 def esc(s):
     return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
 
-def frame_open(width, height, title):
-    """Card background + border + title bar with traffic-light dots."""
+def frame_open(width, height, title, border=True):
+    """Card background + optional border + title bar with traffic-light dots."""
+    stroke = f'stroke="{BORDER}" stroke-width="1"' if border else 'stroke="none"'
     parts = [
         f'<rect x="0" y="0" width="{width}" height="{height}" rx="{RADIUS}" ry="{RADIUS}" '
-        f'fill="{BG}" stroke="{BORDER}" stroke-width="1"/>',
+        f'fill="{BG}" {stroke}/>',
         f'<rect x="0" y="0" width="{width}" height="{TITLEBAR_H}" rx="{RADIUS}" ry="{RADIUS}" fill="{BAR_BG}"/>',
         f'<rect x="0" y="{TITLEBAR_H - RADIUS}" width="{width}" height="{RADIUS}" fill="{BAR_BG}"/>',
-        f'<line x1="0" y1="{TITLEBAR_H}" x2="{width}" y2="{TITLEBAR_H}" stroke="{BORDER}" stroke-width="1"/>',
     ]
+    if border:
+        parts.append(
+            f'<line x1="0" y1="{TITLEBAR_H}" x2="{width}" y2="{TITLEBAR_H}" '
+            f'stroke="{BORDER}" stroke-width="1"/>'
+        )
     for i, dot_color in enumerate(["#ff5f56", "#ffbd2e", "#27c93f"]):
         parts.append(f'<circle cx="{20 + i * 16}" cy="{TITLEBAR_H / 2}" r="5" fill="{dot_color}"/>')
     parts.append(

@@ -15,7 +15,7 @@ from collections import defaultdict
 import requests
 
 sys.path.insert(0, os.path.dirname(__file__))
-from _svg_common import TOPLANGS_WIDTH as WIDTH, TITLEBAR_H, frame_open, svg_open
+from _svg_common import TOPLANGS_WIDTH as WIDTH, TITLEBAR_H, ROW_CARD_HEIGHT, frame_open, svg_open
 
 USERNAME = os.environ.get("GITHUB_PROFILE_USERNAME", "SSShogunn")
 TOKEN = os.environ.get("GH_API_TOKEN")
@@ -83,13 +83,17 @@ def render(totals, top_n=6):
 
     bar_h = 16
     pad_x = 24
-    bar_top = TITLEBAR_H + 26
     row_h = 22
     n_legend_rows = -(-len(top) // 2)  # ceil div, 2 per row at this narrower width
-    height = bar_top + bar_h + 20 + n_legend_rows * row_h + 14
+
+    height = ROW_CARD_HEIGHT
+    content_h = bar_h + 20 + n_legend_rows * row_h
+    available = height - TITLEBAR_H - 14  # inner space below title bar, minus bottom pad
+    top_offset = TITLEBAR_H + max(14, (available - content_h) / 2 + 14)
+    bar_top = top_offset
 
     parts = [svg_open(WIDTH, height)]
-    parts.extend(frame_open(WIDTH, height, TITLE))
+    parts.extend(frame_open(WIDTH, height, TITLE, border=False))
 
     bar_w = WIDTH - 2 * pad_x
     x = pad_x
@@ -97,7 +101,7 @@ def render(totals, top_n=6):
         w = (n / total_bytes) * bar_w
         color = LANG_COLORS.get(lang, FALLBACK_COLOR)
         parts.append(
-            f'<rect x="{x:.1f}" y="{bar_top}" width="0" height="{bar_h}" fill="{color}">'
+            f'<rect x="{x:.1f}" y="{bar_top:.1f}" width="0" height="{bar_h}" fill="{color}">'
             f'<animate attributeName="width" from="0" to="{w:.1f}" begin="0s" '
             f'dur="0.6s" fill="freeze"/>'
             f"</rect>"

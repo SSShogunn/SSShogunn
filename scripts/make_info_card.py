@@ -15,7 +15,7 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(__file__))
-from _svg_common import INFO_CARD_WIDTH as WIDTH, TITLEBAR_H, frame_open, svg_open, esc
+from _svg_common import INFO_CARD_WIDTH as WIDTH, TITLEBAR_H, ROW_CARD_HEIGHT, frame_open, svg_open, esc
 
 STATIC = os.environ.get("STATIC") == "1"
 OUT_PATH = os.path.join(os.path.dirname(__file__), "..", "info-card.svg")
@@ -43,12 +43,12 @@ ROW_H = 24
 PAD_X = 18
 TOP_PAD = 18
 SWATCH_SIZE = 16
-HEIGHT = TITLEBAR_H + TOP_PAD + len(ROWS) * ROW_H + 14 + SWATCH_SIZE + 14
+HEIGHT = ROW_CARD_HEIGHT
 
 
 def build_svg():
     parts = [svg_open(WIDTH, HEIGHT)]
-    parts.extend(frame_open(WIDTH, HEIGHT, TITLE))
+    parts.extend(frame_open(WIDTH, HEIGHT, TITLE, border=False))
 
     step = 0.3
     y = TITLEBAR_H + TOP_PAD + 10
