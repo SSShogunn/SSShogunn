@@ -23,7 +23,13 @@ jobs:
         env:
           GITHUB_PROFILE_USERNAME: SSShogunn
       - run: python scripts/render_heatmap_svg.py
+      - run: python scripts/make_info_card.py
+      - run: python scripts/make_boot_svg.py
+      - run: python scripts/make_toplangs_svg.py
+        env:
+          GITHUB_PROFILE_USERNAME: SSShogunn
+          GH_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "chore: refresh contribution graph [skip ci]"
-          file_pattern: "data/contributions.json contrib-heatmap.svg"
+          commit_message: "chore: refresh profile art [skip ci]"
+          file_pattern: "data/contributions.json contrib-heatmap.svg info-card.svg boot-banner.svg toplangs.svg"

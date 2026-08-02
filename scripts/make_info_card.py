@@ -17,11 +17,11 @@ USER = "aman@sshogunn"
 TITLE = f"{USER} ~ $ neofetch"
 
 ROWS = [
-    ("Now", "SDE @ DViO Digital -- AI marketing analytics (Pune, IN)"),
-    ("Prev", "Backend Intern @ CodingKraft"),
-    ("Stack", "FastAPI - AWS Bedrock - LangChain - Snowflake - Temporal - Java"),
-    ("Highlights", "Homelab on Tailscale - PeerDrop (WebRTC P2P) - Striver A2Z"),
-    ("Building", "AI agent sandboxes - self-hosted infra - DSA in Java"),
+    ("Role", "Backend Engineer -- AI-powered systems & infra"),
+    ("Stack", "FastAPI - AWS Bedrock - LangChain - Snowflake - Java"),
+    ("Building", "WebRTC file transfer - self-hosted homelab - agent sandboxes"),
+    ("Exploring", "Go - ESP32 tinkering - Vedic astrology"),
+    ("Grinding", "DSA (Striver A2Z) - graphs & DP next"),
 ]
 
 LABEL_COLOR = "#39d353"
